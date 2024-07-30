@@ -1,0 +1,22 @@
+groups:
+  - name: test alert_mmanager monitor
+    rules:
+      - alert: HighCpuUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 50
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage detected"
+          description: "Instance {{ $labels.instance }} has high CPU usage (> 50%)"
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 80
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Memory Usage Detected"
+          description: "Memory usage is above 80% for the last 1 minutes on instance {{ $labels.instance }}."
+
+      

@@ -2,16 +2,16 @@ global:
   scrape_interval: 15s
 
 rule_files:
-  - "./prometheus/alert.rules.yml"
+  - "rules/alert.rules.yml"
 
 scrape_configs:
   - job_name: 'node_exporter'
     static_configs:
-      - targets: ['node_exporter:9100']
+      - targets: ['172.16.238.4:9100']
 
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          - 'alertmanager:9093'
+          - '172.16.238.5:9093'
 

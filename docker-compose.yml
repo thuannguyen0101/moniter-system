@@ -6,10 +6,12 @@ services:
     container_name: prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules:/etc/prometheus/rules
     ports:
       - "9090:9090"
     networks:
-      - monitoring
+        monitoring:
+            ipv4_address: 172.16.238.2
 
   grafana:
     image: grafana/grafana:latest
@@ -22,7 +24,8 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
     networks:
-      - monitoring
+        monitoring:
+            ipv4_address: 172.16.238.3
 
   node_exporter:
     image: prom/node-exporter
@@ -30,7 +33,8 @@ services:
     ports:
       - "9100:9100"
     networks:
-      - monitoring
+        monitoring:
+            ipv4_address: 172.16.238.4
 
   alertmanager:
     image: prom/alertmanager:latest
@@ -40,11 +44,15 @@ services:
     ports:
       - "9093:9093"
     networks:
-      - monitoring
-
+        monitoring:
+            ipv4_address: 172.16.238.5
 
 volumes:
   grafana-storage:
 networks:
   monitoring:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
 
