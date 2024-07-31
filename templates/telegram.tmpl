@@ -1,0 +1,23 @@
+{{ define "telegram.default.message" }}
+{{ if eq .Status "firing" }}🚨 *Alert Firing* 🚨
+{{ else }}✅ *Alert Resolved* ✅
+{{ end }}
+*Alertname:* {{ .CommonLabels.alertname }}
+*Severity:* {{ .CommonLabels.severity }}
+*Instance:* {{ .CommonLabels.instance }}
+
+*Summary:* {{ .CommonAnnotations.summary }}
+*Description:* {{ .CommonAnnotations.description }}
+
+{{ if gt (len .Alerts.Firing) 0 }}
+*Firing Alerts:*
+{{ range .Alerts.Firing }}- {{ .Annotations.summary }} ({{ .Labels.instance }})
+{{ end }}
+{{ end }}
+
+{{ if gt (len .Alerts.Resolved) 0 }}
+*Resolved Alerts:*
+{{ range .Alerts.Resolved }}- {{ .Annotations.summary }} ({{ .Labels.instance }})
+{{ end }}
+{{ end }}
+{{ end }}
