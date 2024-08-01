@@ -10,14 +10,16 @@
 *Description:* {{ .CommonAnnotations.description }}
 
 {{ if gt (len .Alerts.Firing) 0 }}
-*Firing Alerts:*
-{{ range .Alerts.Firing }}- {{ .Annotations.summary }} ({{ .Labels.instance }})
+*🔴 Firing Alerts:*
+{{ range .Alerts.Firing }}🔹 {{ .Annotations.summary }} (Instance: {{ .Labels.instance }}, Severity: {{ .Labels.severity }})
 {{ end }}
 {{ end }}
 
 {{ if gt (len .Alerts.Resolved) 0 }}
-*Resolved Alerts:*
-{{ range .Alerts.Resolved }}- {{ .Annotations.summary }} ({{ .Labels.instance }})
+*✅ Resolved Alerts:*
+{{ range .Alerts.Resolved }}🔹 {{ .Annotations.summary }} (Instance: {{ .Labels.instance }}, Severity: {{ .Labels.severity }})
 {{ end }}
 {{ end }}
+
+*Source:* [Click here](http://75b653c4c1dc:9090/graph?g0.expr={{ .GeneratorURL }})
 {{ end }}

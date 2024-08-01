@@ -6,14 +6,14 @@ datasources:
     url: http://172.16.238.2:9090
     isDefault: true
 
-  - name: cloud_01_node_exporter
-    type: prometheus
-    access: proxy
-    url: http://192.168.20.10:9090
-    isDefault: false
+  # - name: cloud_01_node_exporter
+  #   type: prometheus
+  #   access: proxy
+  #   url: http://192.168.20.10:9090
+  #   isDefault: false
   
-  - name: cloud_02_node_exporter
-    type: prometheus
-    access: proxy
-    url: http://192.168.30.10:9090
-    isDefault: false
+  # - name: cloud_02_node_exporter
+  #   type: prometheus
+  #   access: proxy
+  #   url: http://192.168.30.10:9090
+  #   isDefault: false

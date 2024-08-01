@@ -1,63 +1,32 @@
 groups:
-  - name: test alert_mmanager monitor
+  - name: test alert_manager monitor
     rules:
-      ################ Server Status
-      - alert: Server Status
-        expr: up{job="node"}==0
-        for: 5s
-        labels:
-          severity: error
-        annotations:
-          summary: "Server Status (instance {{ $labels.instance }})"
-          description: "Server state is not OK\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
       ################ Memory Usage High
-      - alert: Memory Usage Very High
-        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
-        for: 5s
-        labels:
-          severity: error
-        annotations:
-          summary: "Memory Usage (instance {{ $labels.instance }})"
-          description: "Memory Usage is more than 90%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
       - alert: Memory Usage High
-        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 20
-        for: 5s
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 > 60
+        for: 10s
         labels:
           severity: warning
         annotations:
           summary: "Memory Usage (instance {{ $labels.instance }})"
-          description: "Memory Usage is more than 80%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
+          description: "Memory Usage is more than 60%\n VALUE = {{ printf \"%.2f\" $value }}%.\n LABELS: {{ $labels }}"
+      
       ################ CPU Usage High
-      - alert: Cpu Usage Very High
-        expr:  (1 - avg(rate(node_cpu_seconds_total{origin_prometheus=~"",job=~"node_exporter",mode="idle"}[30s])) by (instance)) * 100 > 60
-        for: 5s
-        labels:
-          severity: error
-        annotations:
-          summary: "CPU Usage (instance {{ $labels.instance }})"
-          description: "CPU Usage is more than 60%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
       - alert: Cpu Usage High
-        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
-        for: 5s
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 60
+        for: 10s
         labels:
           severity: warning
         annotations:
           summary: "CPU Usage (instance {{ $labels.instance }})"
-          description: "CPU Usage is more than 80%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
+          description: "CPU Usage is more than 60%\n VALUE = {{ printf \"%.2f\" $value }}%.\n LABELS: {{ $labels }}"
+
       ################ Disk Usage
-      - alert: Disk SpaceUsage Very High
-        expr: ((node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes) < 5
-        for: 5s
+      - alert: Disk Space High
+        expr: (node_filesystem_size_bytes - node_filesystem_avail_bytes) * 100 / node_filesystem_size_bytes > 20
+        for: 5m
         labels:
-          severity: error
+          severity: critical
         annotations:
           summary: "Disk Space Usage (instance {{ $labels.instance }})"
-          description: "Disk Space on Drive is used more than 95%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
-      - alert: Disk SpaceUsage High
-        expr: ((node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes) > 20
-        for: 5s
-        labels:
-          severity: warning
-        annotations:
-          summary: "Disk Space Usage (instance {{ $labels.instance }})"
-          description: "Disk Space on Drive is used more than 80%\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
+          description: "Disk space usage is over 20% on {{ $labels.device }}.\nVALUE = {{ printf \"%.2f\" $value }}%.\nLABELS: {{ $labels }}"

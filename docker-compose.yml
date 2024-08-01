@@ -37,19 +37,19 @@ services:
         monitoring:
             ipv4_address: 172.16.238.4
 
-  cloud_01_node_exporter:
-    image: prom/node-exporter
-    container_name: cloud_01_node_exporter
-    networks:
-        cloud1net:
-            ipv4_address: 192.168.20.10
+  # cloud_01_node_exporter:
+  #   image: prom/node-exporter
+  #   container_name: cloud_01_node_exporter
+  #   networks:
+  #       cloud1net:
+  #           ipv4_address: 192.168.20.10
 
-  cloud_02_node_exporter:
-    image: prom/node-exporter
-    container_name: cloud_02_node_exporter
-    networks:
-        cloud2net:
-            ipv4_address: 192.168.30.10
+  # cloud_02_node_exporter:
+  #   image: prom/node-exporter
+  #   container_name: cloud_02_node_exporter
+  #   networks:
+  #       cloud2net:
+  #           ipv4_address: 192.168.30.10
 
   alertmanager:
     image: prom/alertmanager:latest
@@ -71,15 +71,15 @@ networks:
       config:
         - subnet: 172.16.238.0/24
 
-  cloud1net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.20.0/24
+  # cloud1net:
+  #   driver: bridge
+  #   ipam:
+  #     config:
+  #       - subnet: 192.168.20.0/24
 
-  cloud2net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.30.0/24
+  # cloud2net:
+  #   driver: bridge
+  #   ipam:
+  #     config:
+  #       - subnet: 192.168.30.0/24
 
