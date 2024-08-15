@@ -2,7 +2,7 @@
 
 
 ## Giới thiệu
-# Dự án này cung cấp hướng dẫn cài đặt và sử dụng Prometheus và Grafana, Alertmanager, bằng Docker trên Ubuntu. Prometheus là một hệ thống giám sát và cảnh báo mã nguồn mở, còn Grafana là một công cụ phân tích và hiển thị dữ liệu. Và Alertmanager để gửi thông báo đến telegram
+#### Dự án này cung cấp hướng dẫn cài đặt và sử dụng Prometheus và Grafana, Alertmanager, bằng Docker trên Ubuntu. Prometheus là một hệ thống giám sát và cảnh báo mã nguồn mở, còn Grafana là một công cụ phân tích và hiển thị dữ liệu. Và Alertmanager để gửi thông báo đến telegram
 
 ## Yêu cầu
 - Ubuntu
